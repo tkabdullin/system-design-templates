@@ -1,0 +1,33 @@
+@startuml SWAwithAPIGTW-CD-Template
+title "Simple Web Application with API Gateway Component Diagram Template"
+
+component [Client App] as client
+
+component [API Gateway] as api_g
+
+package "Services" as srvcs {
+    component [Auth Service-EXAMPLE] as auth_s
+    component [User Management Service-EXAMPLE] as users_mgmt_s 
+    component [business-domain-N logic service] as b_domain_N_s
+}
+
+component [Auth Service External Provider] as auth_s_ext
+
+package "Database" as dbs {
+    database "Users Management\nService Database" as users_mgmt_s_db
+    database "business-domain-N logic\nservice database" as b_domain_N_s_db
+}
+
+client -d-> api_g
+
+api_g -d-> auth_s
+api_g -d-> users_mgmt_s
+api_g -d-> b_domain_N_s
+
+auth_s <-l-> auth_s_ext
+users_mgmt_s <-d-> users_mgmt_s_db
+b_domain_N_s <-d-> b_domain_N_s_db
+
+users_mgmt_s <-r-> b_domain_N_s
+
+@enduml
